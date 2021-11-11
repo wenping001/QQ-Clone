@@ -1,4 +1,4 @@
-package com.example.qq;
+package com.example.qq.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,8 +7,11 @@ import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+
+import com.example.qq.R;
 
 public class LoginActivity extends BaseActivity{
     private SharedPreferences pref;
@@ -17,6 +20,7 @@ public class LoginActivity extends BaseActivity{
     public EditText usernameEdit;
     public EditText passwordEdit;
     private CheckBox rememberPass;
+    private TextView register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,13 @@ public class LoginActivity extends BaseActivity{
                 builder.setMessage("wrong username or password!");
                 builder.show();
             }
+        });
+
+        register = findViewById(R.id.create_new_account);
+
+        register.setOnClickListener(v-> {
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
         });
 
     }

@@ -1,14 +1,13 @@
-package com.example.qq;
+package com.example.qq.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.qq.R;
 import com.example.qq.adapter.MsgAdapter;
 import com.example.qq.model.Msg;
 
@@ -36,18 +35,15 @@ public class ChatActivity extends BaseActivity{
         msgRecyclerView.setLayoutManager(layoutManager);
         adapter = new MsgAdapter(msgList);
         msgRecyclerView.setAdapter(adapter);
-        send.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-               String content = inputText.getText().toString();
-               if(!"".equals(content)){
-                   Msg msg = new Msg(content,Msg.TYPE_SENT);
-                   msgList.add(msg);
-                   adapter.notifyItemInserted(msgList.size() - 1);
-                   msgRecyclerView.scrollToPosition(msgList.size() - 1);
-                   inputText.setText("");
-               }
-            }
+        send.setOnClickListener(v -> {
+           String content = inputText.getText().toString();
+           if(!"".equals(content)){
+               Msg msg = new Msg(content,Msg.TYPE_SENT);
+               msgList.add(msg);
+               adapter.notifyItemInserted(msgList.size() - 1);
+               msgRecyclerView.scrollToPosition(msgList.size() - 1);
+               inputText.setText("");
+           }
         });
     }
 

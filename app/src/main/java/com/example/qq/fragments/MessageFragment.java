@@ -1,4 +1,4 @@
-package com.example.qq;
+package com.example.qq.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.qq.R;
+import com.example.qq.activities.ChatActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,7 +69,7 @@ public class MessageFragment extends Fragment {
 
         goToChat = view.findViewById(R.id.go_to_chat_room);
         goToChat.setOnClickListener(v -> {
-           Intent intent = new Intent(getActivity(),ChatActivity.class);
+           Intent intent = new Intent(getActivity(), ChatActivity.class);
            startActivity(intent);
         });
         return view;

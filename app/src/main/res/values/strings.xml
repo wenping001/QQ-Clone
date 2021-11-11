@@ -12,4 +12,16 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string-array name="contacts_name">
+        <item>Elon Mask</item>
+        <item>Jack Ma</item>
+        <item>Mark Elliot Zuckerberg</item>
+        <item>Bill Gates</item>
+        <item>Jeff Bezos</item>
+        <item>Steven Jobs</item>
+        <item>Warren Buffet</item>
+    </string-array>
+
+
 </resources>

@@ -1,23 +1,23 @@
 package com.example.qq.model;
 
 public class Contact {
-    private String imageId;
+    private int imageId;
     private String name;
     private String date;
     private String last_message;
 
-    public Contact(String imageId, String name, String date, String last_message) {
+    public Contact(int imageId, String name, String date, String last_message) {
         this.imageId = imageId;
         this.name = name;
         this.date = date;
         this.last_message = last_message;
     }
 
-    public String getImageId() {
+    public int getImageId() {
         return imageId;
     }
 
-    public void setImageId(String imageId) {
+    public void setImageId(int imageId) {
         this.imageId = imageId;
     }
 

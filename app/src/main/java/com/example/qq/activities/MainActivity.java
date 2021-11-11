@@ -1,11 +1,15 @@
-package com.example.qq;
+package com.example.qq.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 
 
+import com.example.qq.fragments.ContactsFragment;
+import com.example.qq.fragments.FavFragment;
+import com.example.qq.fragments.MessageFragment;
+import com.example.qq.R;
+import com.example.qq.fragments.ViewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
