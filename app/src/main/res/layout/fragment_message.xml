@@ -3,8 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/hot_pink"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/go_to_chat_room"
