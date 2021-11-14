@@ -1,7 +1,9 @@
 package com.example.qq.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 
@@ -49,5 +51,10 @@ public class MainActivity extends BaseActivity{
             return true;
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

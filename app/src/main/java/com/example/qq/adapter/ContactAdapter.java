@@ -1,5 +1,6 @@
 package com.example.qq.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
     private List<Contact> contactList;
 
-    public ContactAdapter(List<Contact> contactList) {
+    public ContactAdapter(Context context, List<Contact> contactList) {
         this.contactList = contactList;
     }
 
@@ -33,7 +34,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Contact contact = contactList.get(position);
-        holder.avatar.setImageResource(contact.getImageId());
         holder.name.setText(contact.getName());
     }
 
@@ -52,7 +52,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             layout = itemView.findViewById(R.id.contact_item);
-            avatar = itemView.findViewById(R.id.avatar);
             name = itemView.findViewById(R.id.contact_name);
         }
     }

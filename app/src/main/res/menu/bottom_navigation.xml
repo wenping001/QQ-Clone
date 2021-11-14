@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/nav_message" android:icon="@drawable/message" android:title="消息"/>
-    <item android:id="@+id/nav_contacts" android:icon="@drawable/contacts" android:title="联系人"/>
-    <item android:id="@+id/nav_view" android:icon="@drawable/view_point" android:title="看点"/>
-    <item android:id="@+id/nav_fav" android:icon="@drawable/favorites" android:title="动态"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"  >
+    <item android:id="@+id/nav_message" android:icon="@drawable/message" android:title="消息"  android:iconTint="@color/secondary_text" />
+    <item android:id="@+id/nav_contacts" android:icon="@drawable/contacts" android:title="联系人" android:iconTint="@color/primary"/>
+    <item android:id="@+id/nav_view" android:icon="@drawable/view_point" android:title="看点" android:iconTint="@color/primary"/>
+    <item android:id="@+id/nav_fav" android:icon="@drawable/favorites" android:title="动态" android:iconTint="@color/primary"/>
 </menu>

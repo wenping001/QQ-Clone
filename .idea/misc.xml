@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android/QQ/app/src/main/res/drawable/background_image.xml" value="0.2351851851851852" />
+        <entry key="..\:/android/QQ/app/src/main/res/drawable/bottom_navigation_selector.xml" value="0.12760416666666666" />
         <entry key="..\:/android/QQ/app/src/main/res/drawable/chat_bubble.xml" value="0.13385416666666666" />
         <entry key="..\:/android/QQ/app/src/main/res/drawable/chat_bubble_left.xml" value="0.24947916666666667" />
         <entry key="..\:/android/QQ/app/src/main/res/drawable/chat_bubble_right.xml" value="0.13385416666666666" />
@@ -11,9 +13,9 @@
         <entry key="..\:/android/QQ/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.15227576974564927" />
         <entry key="..\:/android/QQ/app/src/main/res/layout-w936dp/activity_login.xml" value="0.177734375" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_chat.xml" value="0.16304347826086957" />
-        <entry key="..\:/android/QQ/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/android/QQ/app/src/main/res/layout/activity_register.xml" value="0.23697916666666666" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/activity_register.xml" value="0.536" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_send_broadcast.xml" value="0.23333333333333334" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/contact_item.xml" value="0.23697916666666666" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/fragment_contacts.xml" value="0.16802536231884058" />
