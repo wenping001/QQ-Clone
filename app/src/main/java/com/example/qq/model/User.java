@@ -8,12 +8,6 @@ import androidx.room.PrimaryKey;
 @Entity
 public class User {
 
-//    @ColumnInfo(name = "gender" )
-//    private enum gender
-
-//    @ColumnInfo(name = "avatar_image")
-//    private String avatar;
-
     @ColumnInfo(name = "username")
     private String username;
 
@@ -24,6 +18,7 @@ public class User {
     @ColumnInfo(name = "email")
     @NonNull
     private String Email;
+
 
     public User() {
     }

@@ -1,36 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d8e0e8">
+    android:background="@color/primary"
+    android:orientation="vertical">
+
+
+    <View
+        android:id="@+id/back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/back_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/topBarName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="Hello"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/msg_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#e8e8e8"
+        app:layout_constraintBottom_toTopOf="@+id/input_text"
+        app:layout_constraintTop_toBottomOf="@+id/topBarName"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="true"
-        >
+    <EditText
+        android:id="@id/input_text"
+        android:layout_width="317dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white"
+        android:hint="type something here"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@id/input_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/type_something_here"
-            android:maxLines="2" />
+    <View
+        android:id="@+id/send"
+        android:layout_width="26dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/send_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/input_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/input_text"
+        app:layout_constraintTop_toTopOf="@+id/input_text" />
 
-        <Button
-            android:id="@+id/send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/send" />
 
-    </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "777812138113",
+    "project_id": "chat-app-8a3fb",
+    "storage_bucket": "chat-app-8a3fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777812138113:android:66f2f31ec69c5bd091d580",
+        "android_client_info": {
+          "package_name": "com.example.qq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777812138113-855m7oavt8edg2jodhv8069lo723k1br.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASi1h25iNsZueZH335j0zs2Jly8-kEP3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777812138113-855m7oavt8edg2jodhv8069lo723k1br.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

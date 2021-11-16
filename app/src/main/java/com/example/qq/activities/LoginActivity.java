@@ -29,11 +29,19 @@ public class LoginActivity extends BaseActivity{
         setContentView(binding.getRoot());
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(pref.getBoolean("is_logged",false)){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         boolean isRemember = pref.getBoolean("remember_password",false);
 
         if(isRemember){
            isRememberThenRead();
         }
+
         binding.loginBtn.setOnClickListener(v->{
             String username = binding.username.getText().toString().trim();
             String password = binding.password.getText().toString().trim();
@@ -96,6 +104,7 @@ public class LoginActivity extends BaseActivity{
         String password = binding.password.getText().toString().trim();
         editor = pref.edit();
         if(binding.rememberPassword.isChecked()) {
+            editor.putBoolean("is_logged",true);
             editor.putBoolean("remember_password", true);
             editor.putString("username", username);
             editor.putString("password", password);

@@ -4,6 +4,6 @@
     <item
         android:drawable="@drawable/ic_tencent_qq_logo_wine"
         android:width="@dimen/_120sdp"
-        android:height="@dimen/_80sdp"
+        android:height="@dimen/_100sdp"
         android:gravity="center" />
 </layer-list>

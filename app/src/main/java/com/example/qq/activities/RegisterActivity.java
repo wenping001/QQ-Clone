@@ -43,8 +43,17 @@ public class RegisterActivity extends AppCompatActivity {
             String username = binding.usernameInput.getText().toString().trim();
             String password = binding.passwordInput.getText().toString().trim();
             String email = binding.emailInput.getText().toString().trim();
-            Log.d("TEST","register button clicked.");
-            register(username,email,password);
+
+            if(!isUsernameUsed(username) && !isEmailRegistered(email)){
+                register(username,email,password);
+            }
+            else if(isUsernameUsed(username)) {
+                Toast.makeText(this, "username is used.", Toast.LENGTH_SHORT).show();
+            }
+            else if(isEmailRegistered(email)){
+                Toast.makeText(this, "email is registered.", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
         binding.emailInput.addTextChangedListener(registerTextWatcher);
@@ -83,12 +92,13 @@ public class RegisterActivity extends AppCompatActivity {
         AppDatabase db =  AppDatabase.getInstance(this);
         User user = new User(username,password,email);
         db.userDao().insertUser(user);
-        Toast.makeText(this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Registered Successfully,Please Log in", Toast.LENGTH_SHORT).show();
+        onBackPressed();
+
     }
 
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
            new ActivityResultContracts.StartActivityForResult(), result ->{
-
                if(result.getResultCode() == RESULT_OK){
                    if(result.getData() != null){
                        Uri imageUri = result.getData().getData();
@@ -116,9 +126,12 @@ public class RegisterActivity extends AppCompatActivity {
        byte[] bytes = byteArrayOutputStream.toByteArray();
        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
-    public Boolean isConflict(String username,String email){
+    public Boolean isEmailRegistered(String email){
         AppDatabase db = AppDatabase.getInstance(this);
-        User user = db.userDao().userIsRegistered(email,username);
-        return true;
+        return db.userDao().isEmailUsed(email) != null;
+    }
+    public Boolean isUsernameUsed(String username){
+        AppDatabase db = AppDatabase.getInstance(this);
+        return db.userDao().isUsernameUsed(username) != null;
     }
 }

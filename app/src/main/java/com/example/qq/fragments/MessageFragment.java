@@ -2,12 +2,14 @@ package com.example.qq.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,9 @@ import java.util.List;
 public class MessageFragment extends Fragment {
 
     public FragmentMessageBinding messageBinding;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+
     public ContactAdapter contactAdapter;
     public List<Contact> contacts = new ArrayList<>();
 
@@ -61,18 +66,28 @@ public class MessageFragment extends Fragment {
         messageBinding = FragmentMessageBinding.inflate(inflater, container, false);
         initContacts();
         View view = messageBinding.getRoot();
-        messageBinding.contactsRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+        messageBinding.messageRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // Recycler view
         contactAdapter = new ContactAdapter(getContext(),contacts);
-        messageBinding.contactsRecyclerview.setAdapter(contactAdapter);
+        messageBinding.messageRecyclerview.setAdapter(contactAdapter);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        messageBinding.name.setText(pref.getString("username",""));
 
         // logout
         messageBinding.logout.setOnClickListener(v->{
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("LOGOUT");
+            builder.setTitle("logout");
             builder.setTitle("Confirm logout?");
             builder.setPositiveButton("confirm", (dialog, which) ->{
+                pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+                editor = pref.edit();
+                editor.putBoolean("is_logged",false);
+                editor.apply();
                 startActivity(new Intent(getActivity(),LoginActivity.class));
                 dialog.dismiss();
             });
@@ -84,10 +99,10 @@ public class MessageFragment extends Fragment {
     }
 
     public void initContacts(){
-        Contact a1 = new Contact("a1");
-        Contact a2 = new Contact("a2");
-        Contact a3 = new Contact("a3");
-        Contact a4 = new Contact("a4");
+        Contact a1 = new Contact("Tom");
+        Contact a2 = new Contact("Jack");
+        Contact a3 = new Contact("Rick");
+        Contact a4 = new Contact("Adam");
         contacts.add(a1);
         contacts.add(a2);
         contacts.add(a3);
