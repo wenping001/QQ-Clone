@@ -1,14 +1,20 @@
 package com.example.qq.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.qq.R;
+import com.example.qq.databinding.FragmentContactsBinding;
+import com.example.qq.utilities.Constants;
+import com.example.qq.utilities.PreferenceManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +22,9 @@ import com.example.qq.R;
  * create an instance of this fragment.
  */
 public class ContactsFragment extends Fragment {
+
+    private FragmentContactsBinding binding;
+    private PreferenceManager pref;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +69,16 @@ public class ContactsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+        binding = FragmentContactsBinding.inflate(inflater,container,false);
+        View view = binding.getRoot();
+        pref = new PreferenceManager(getActivity().getApplicationContext());
+
+        binding.name.setText(pref.getString(Constants.KEY_NAME));
+
+        byte[] decodedString = Base64.decode(pref.getString(Constants.KEY_IMAGE), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        binding.avatar.setImageBitmap(decodedByte);
+
         return view;
     }
 }

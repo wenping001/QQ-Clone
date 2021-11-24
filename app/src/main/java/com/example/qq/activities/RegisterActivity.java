@@ -1,10 +1,5 @@
 package com.example.qq.activities;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,46 +9,42 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.qq.AppDatabase;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.qq.databinding.ActivityRegisterBinding;
-import com.example.qq.model.User;
+import com.example.qq.utilities.Constants;
+import com.example.qq.utilities.PreferenceManager;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    public ActivityRegisterBinding binding;
+    private ActivityRegisterBinding binding;
+    private PreferenceManager preferenceManager;
 
+    private String encodedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        preferenceManager = new PreferenceManager(getApplicationContext());
         View view = binding.getRoot();
         setContentView(view);
 
         binding.backToLogin.setOnClickListener(v->onBackPressed());
         binding.registerBtn.setOnClickListener(v->{
-            String username = binding.usernameInput.getText().toString().trim();
-            String password = binding.passwordInput.getText().toString().trim();
-            String email = binding.emailInput.getText().toString().trim();
-
-            if(!isUsernameUsed(username) && !isEmailRegistered(email)){
-                register(username,email,password);
-            }
-            else if(isUsernameUsed(username)) {
-                Toast.makeText(this, "username is used.", Toast.LENGTH_SHORT).show();
-            }
-            else if(isEmailRegistered(email)){
-                Toast.makeText(this, "email is registered.", Toast.LENGTH_SHORT).show();
-            }
-
+            register();
         });
 
         binding.emailInput.addTextChangedListener(registerTextWatcher);
@@ -81,20 +72,39 @@ public class RegisterActivity extends AppCompatActivity {
             String confirmPassword= binding.confirmPassword.getText().toString().trim();
             String username = binding.usernameInput.getText().toString().trim();
 
-            binding.registerBtn.setEnabled(!username.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty() && !email.isEmpty());
+            binding.registerBtn.setEnabled(!username.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty() && !email.isEmpty() && encodedImage !=null);
         }
 
         @Override
         public void afterTextChanged(Editable s) {}
     };
 
-    public void register(String username,String email,String password){
-        AppDatabase db =  AppDatabase.getInstance(this);
-        User user = new User(username,password,email);
-        db.userDao().insertUser(user);
-        Toast.makeText(this, "Registered Successfully,Please Log in", Toast.LENGTH_SHORT).show();
-        onBackPressed();
+    public void register(){
+        loading(true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String,Object> user = new HashMap<>();
+        user.put(Constants.KEY_NAME,binding.usernameInput.getText().toString());
+        user.put(Constants.KEY_EMAIL,binding.emailInput.getText().toString());
+        user.put(Constants.KEY_PASSWORD,binding.passwordInput.getText().toString());
+        user.put(Constants.KEY_IMAGE,encodedImage);
 
+        db.collection(Constants.KEY_COLLECTION_USERS).add(user).addOnSuccessListener(
+            documentReference ->{
+                loading(false);
+                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN,true);
+                preferenceManager.putString(Constants.KEY_USER_ID,documentReference.getId());
+                preferenceManager.putString(Constants.KEY_NAME,binding.usernameInput.getText().toString());
+                preferenceManager.putString(Constants.KEY_IMAGE,encodedImage);
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        ).addOnFailureListener(
+            e->{
+                loading(false);
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        );
     }
 
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
@@ -106,8 +116,8 @@ public class RegisterActivity extends AppCompatActivity {
                            InputStream inputStream = getContentResolver().openInputStream(imageUri);
                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                            binding.imageProfile.setImageBitmap(bitmap);
-                           binding.addImage.setVisibility(View.GONE);
-                           encodedImage(bitmap);
+                           binding.addImage.setVisibility(View.INVISIBLE);
+                           encodedImage = encodedImage(bitmap);
                        } catch(FileNotFoundException e){
                            e.printStackTrace();
 
@@ -126,12 +136,14 @@ public class RegisterActivity extends AppCompatActivity {
        byte[] bytes = byteArrayOutputStream.toByteArray();
        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
-    public Boolean isEmailRegistered(String email){
-        AppDatabase db = AppDatabase.getInstance(this);
-        return db.userDao().isEmailUsed(email) != null;
-    }
-    public Boolean isUsernameUsed(String username){
-        AppDatabase db = AppDatabase.getInstance(this);
-        return db.userDao().isUsernameUsed(username) != null;
+
+    private void loading(Boolean isLoading){
+        if (isLoading) {
+            binding.prgressBar.setVisibility(View.INVISIBLE);
+            binding.registerBtn.setVisibility(View.VISIBLE);
+        } else {
+            binding.prgressBar.setVisibility(View.VISIBLE);
+            binding.registerBtn.setVisibility(View.INVISIBLE);
+        }
     }
 }

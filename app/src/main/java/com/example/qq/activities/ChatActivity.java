@@ -13,6 +13,7 @@ import com.example.qq.R;
 import com.example.qq.adapter.MsgAdapter;
 import com.example.qq.databinding.ActivityChatBinding;
 import com.example.qq.model.Msg;
+import com.example.qq.utilities.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class ChatActivity extends BaseActivity{
                 initMsgs();
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("username");
+        String name = intent.getStringExtra(Constants.KEY_NAME);
         binding.topBarName.setText(name);
         inputText = findViewById(R.id.input_text);
         send = findViewById(R.id.send);

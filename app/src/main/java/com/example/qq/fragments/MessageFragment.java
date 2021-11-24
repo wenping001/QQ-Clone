@@ -1,111 +1,125 @@
 package com.example.qq.fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.qq.activities.LoginActivity;
-import com.example.qq.adapter.ContactAdapter;
+import com.example.qq.adapter.UserAdapter;
 import com.example.qq.databinding.FragmentMessageBinding;
 import com.example.qq.model.Contact;
+import com.example.qq.model.User;
+import com.example.qq.utilities.Constants;
+import com.example.qq.utilities.PreferenceManager;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MessageFragment extends Fragment {
 
+    private static final String TAG = "MessageFragment";
+
     public FragmentMessageBinding messageBinding;
-    private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
-
-    public ContactAdapter contactAdapter;
-    public List<Contact> contacts = new ArrayList<>();
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
-    public MessageFragment() {}
-
-    public static MessageFragment newInstance(String param1, String param2) {
-        MessageFragment fragment = new MessageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private PreferenceManager pref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
+
+    public MessageFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         messageBinding = FragmentMessageBinding.inflate(inflater, container, false);
-        initContacts();
         View view = messageBinding.getRoot();
-
-
-        messageBinding.messageRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        pref = new PreferenceManager(getActivity().getApplicationContext());
+        loadUserDetail();
         // Recycler view
-        contactAdapter = new ContactAdapter(getContext(),contacts);
-        messageBinding.messageRecyclerview.setAdapter(contactAdapter);
-
-        pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-        messageBinding.name.setText(pref.getString("username",""));
-
+        messageBinding.messageRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        getUsers();
         // logout
-        messageBinding.logout.setOnClickListener(v->{
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("logout");
-            builder.setTitle("Confirm logout?");
-            builder.setPositiveButton("confirm", (dialog, which) ->{
-                pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-                editor = pref.edit();
-                editor.putBoolean("is_logged",false);
-                editor.apply();
-                startActivity(new Intent(getActivity(),LoginActivity.class));
-                dialog.dismiss();
-            });
-            builder.setNegativeButton("cancel", (dialog, which) -> dialog.dismiss());
-            builder.show();
-        });
-
+        messageBinding.logout.setOnClickListener(v->{logout();});
         return view;
     }
 
-    public void initContacts(){
-        Contact a1 = new Contact("Tom");
-        Contact a2 = new Contact("Jack");
-        Contact a3 = new Contact("Rick");
-        Contact a4 = new Contact("Adam");
-        contacts.add(a1);
-        contacts.add(a2);
-        contacts.add(a3);
-        contacts.add(a4);
+    public void getUsers(){
+        isLoading(true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Constants.KEY_COLLECTION_USERS).get().addOnCompleteListener(task->{
+            isLoading(false);
+            String currentUserId =  pref.getString(Constants.KEY_USER_ID);
+            if(task.isSuccessful() && task.getResult()!=null){
+                List<User> userList = new ArrayList<>();
+                for(QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
+                    if(currentUserId.equals(queryDocumentSnapshot.getId())){
+                        continue;
+                    }
+                    User user = new User();
+                    user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME);
+                    user.image= queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
+                    user.email= queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
+                    user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                    userList.add(user);
+                }
+                if(userList.size() > 0){
+                    UserAdapter userAdapter = new UserAdapter(getActivity(),userList);
+                    messageBinding.messageRecyclerview.setAdapter(userAdapter);
+                }
+                else{
+                    Toast.makeText(getActivity(), "No user", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
+    public void isLoading(Boolean isLoading){
+        if(isLoading){
+            messageBinding.progressBar.setVisibility(View.VISIBLE);
+        }
+        else{
+            messageBinding.progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
+    private void loadUserDetail(){
+        messageBinding.name.setText(pref.getString(Constants.KEY_NAME));
+        byte[] decodedString = Base64.decode(pref.getString(Constants.KEY_IMAGE), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        messageBinding.avatar.setImageBitmap(decodedByte);
+    }
+
+    private void logout(){
+        Toast.makeText(getActivity(), "Logging out....", Toast.LENGTH_SHORT).show();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference dr = db.collection(Constants.KEY_COLLECTION_USERS).document(pref.getString(Constants.KEY_USER_ID));
+        HashMap<String,Object> updates = new HashMap<>();
+        updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
+        dr.update(updates)
+                .addOnSuccessListener(unused -> {
+                    pref.clear();
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                    getActivity().finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getActivity(), "unable to log out.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
 }

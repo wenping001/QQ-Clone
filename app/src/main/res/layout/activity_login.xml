@@ -8,13 +8,15 @@
     android:padding="10dp"
     android:layout_marginTop="20dp"
     >
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome Back"
+        android:text="@string/welcome_back"
         android:layout_gravity="center_horizontal"
-        android:textSize="30dp"
-        android:textFontWeight="700"
+        android:textSize="@dimen/heading"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
         android:layout_marginVertical="40dp"
         />
 
@@ -26,6 +28,7 @@
     <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textSize="@dimen/normal_text"
             android:text="username: "
             android:layout_height="wrap_content" />
         <EditText
@@ -34,7 +37,7 @@
             android:layout_weight="2"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:textSize="20sp"
+            android:textSize="@dimen/normal_text"
             />
     </LinearLayout>
 
@@ -49,7 +52,7 @@
             android:layout_height="wrap_content" />
 
         <EditText android:id="@+id/password"
-            android:textSize="20sp"
+            android:textSize="@dimen/normal_text"
             android:layout_marginBottom="10dp"
             android:layout_weight="2"
             android:layout_width="0dp"
@@ -60,42 +63,59 @@
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
 
-        <CheckBox
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:id="@+id/remember_password"
-            android:layout_height="wrap_content"
-            />
+<!--        <CheckBox-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:id="@+id/remember_password"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            />-->
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
-            android:text="Remember Password"
-            android:layout_height="wrap_content" />
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="6"-->
+<!--            android:textSize="@dimen/normal_text"-->
+<!--            android:text="Remember Password"-->
+<!--            android:layout_height="wrap_content" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
-    <Button
-        android:id="@+id/login_btn"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="Login"
         android:layout_marginTop="20dp"
-        android:enabled="false"
-        />
+        >
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/normal_text"
+            android:text="Login"
+            android:enabled="false"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            />
+    </FrameLayout>
+
 
     <TextView
         android:id="@+id/create_new_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create New Account"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:text="@string/create_new_account"
         android:layout_gravity="center_horizontal"
-        android:textSize="15dp"
+        android:textSize="@dimen/normal_text"
         android:layout_marginTop="50dp"
         />
 

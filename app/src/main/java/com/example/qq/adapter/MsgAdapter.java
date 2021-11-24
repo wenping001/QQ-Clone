@@ -10,11 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qq.R;
+import com.example.qq.databinding.ItemContainerReceivedMessageBinding;
+import com.example.qq.databinding.ItemContainerSendMessageBinding;
 import com.example.qq.model.Msg;
 
 import java.util.List;
 
 public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
+    private ItemContainerReceivedMessageBinding receivedMessageBinding;
+    private ItemContainerSendMessageBinding sendMessageBinding;
+
     private List<Msg> mMsgList;
 
     public MsgAdapter(List<Msg> msgList) {

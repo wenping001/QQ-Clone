@@ -1,29 +1,35 @@
 package com.example.qq.activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
-
+import android.widget.Toast;
 
 import com.example.qq.fragments.ContactsFragment;
 import com.example.qq.fragments.FavFragment;
 import com.example.qq.fragments.MessageFragment;
 import com.example.qq.R;
-import com.example.qq.fragments.ViewFragment;
+import com.example.qq.fragments.ProfileFragment;
+import com.example.qq.utilities.Constants;
+import com.example.qq.utilities.PreferenceManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends BaseActivity{
 
     BottomNavigationView bottomNavigationView;
+    private PreferenceManager pref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        pref = new PreferenceManager(getApplicationContext());
+        getToken();
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.nav_message);
 
@@ -43,7 +49,7 @@ public class MainActivity extends BaseActivity{
                     fragment = new ContactsFragment();
                     break;
                 case R.id.nav_view:
-                    fragment = new ViewFragment();
+                    fragment = new ProfileFragment();
                     break;
             }
 
@@ -51,6 +57,17 @@ public class MainActivity extends BaseActivity{
             return true;
         });
 
+    }
+    private void getToken() {
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+    }
+    private void updateToken(String token){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference dr = db.collection(Constants.KEY_COLLECTION_USERS)
+                .document(pref.getString(Constants.KEY_USER_ID));
+        dr.update(Constants.KEY_FCM_TOKEN,token)
+                .addOnSuccessListener(unused -> Toast.makeText(this, "Token updated.", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e->Toast.makeText(this, "Error update token.", Toast.LENGTH_SHORT).show());
     }
 
     @Override
