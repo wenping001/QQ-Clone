@@ -31,8 +31,6 @@ import java.util.List;
 
 public class MessageFragment extends Fragment {
 
-    private static final String TAG = "MessageFragment";
-
     public FragmentMessageBinding messageBinding;
     private PreferenceManager pref;
 
@@ -50,54 +48,10 @@ public class MessageFragment extends Fragment {
         View view = messageBinding.getRoot();
         pref = new PreferenceManager(getActivity().getApplicationContext());
         loadUserDetail();
-        // Recycler view
-        messageBinding.messageRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        getUsers();
         // logout
         messageBinding.logout.setOnClickListener(v->{logout();});
         return view;
     }
-
-    public void getUsers(){
-        isLoading(true);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.KEY_COLLECTION_USERS).get().addOnCompleteListener(task->{
-            isLoading(false);
-            String currentUserId =  pref.getString(Constants.KEY_USER_ID);
-            if(task.isSuccessful() && task.getResult()!=null){
-                List<User> userList = new ArrayList<>();
-                for(QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
-                    if(currentUserId.equals(queryDocumentSnapshot.getId())){
-                        continue;
-                    }
-                    User user = new User();
-                    user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME);
-                    user.image= queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
-                    user.email= queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
-                    user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
-                    userList.add(user);
-                }
-                if(userList.size() > 0){
-                    UserAdapter userAdapter = new UserAdapter(getActivity(),userList);
-                    messageBinding.messageRecyclerview.setAdapter(userAdapter);
-                }
-                else{
-                    Toast.makeText(getActivity(), "No user", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    public void isLoading(Boolean isLoading){
-        if(isLoading){
-            messageBinding.progressBar.setVisibility(View.VISIBLE);
-        }
-        else{
-            messageBinding.progressBar.setVisibility(View.INVISIBLE);
-        }
-    }
-
-
     private void loadUserDetail(){
         messageBinding.name.setText(pref.getString(Constants.KEY_NAME));
         byte[] decodedString = Base64.decode(pref.getString(Constants.KEY_IMAGE), Base64.DEFAULT);

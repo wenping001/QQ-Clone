@@ -42,7 +42,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         holder.setUserData(user);
         holder.binding.userItem.setOnClickListener(v->{
             Intent intent =new Intent(context, ChatActivity.class);
-            intent.putExtra(Constants.KEY_NAME,user.name);
+            intent.putExtra(Constants.KEY_USER,user);
             context.startActivity(intent);
         });
 

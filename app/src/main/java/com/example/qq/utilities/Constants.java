@@ -10,4 +10,16 @@ public class Constants {
     public static final String KEY_USER_ID = "userId";
     public static final String KEY_IMAGE= "image";
     public static final String KEY_FCM_TOKEN= "fcmToken";
+    public static final String KEY_COLLECTION_MOMENT = "moments";
+    public static final String KEY_MOMENT_NAME= "name";
+    public static final String KEY_MOMENT_CONTENT_TEXT = "content_text";
+    public static final String KEY_AVATAR= "avatar";
+    public static final String KEY_CONTENT_IMAGE = "content_image";
+    public static final String KEY_CONTENT_POSTED_TIME = "posted_time";
+    public static final String KEY_USER = "user";
+    public static final String KEY_COLLECTION_CHAT = "chat";
+    public static final String KEY_SENDER_ID = "senderId";
+    public static final String KEY_RECEIVED_ID = "receiverId";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_TIMESTAMP = "timestamp";
 }

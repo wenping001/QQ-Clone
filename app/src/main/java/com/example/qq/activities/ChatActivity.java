@@ -1,21 +1,23 @@
 package com.example.qq.activities;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import com.example.qq.R;
 import com.example.qq.adapter.MsgAdapter;
 import com.example.qq.databinding.ActivityChatBinding;
 import com.example.qq.model.Msg;
+import com.example.qq.model.User;
 import com.example.qq.utilities.Constants;
+import com.example.qq.utilities.PreferenceManager;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -23,50 +25,57 @@ public class ChatActivity extends BaseActivity{
 
     private ActivityChatBinding binding;
 
+    private PreferenceManager pref;
     private final List<Msg> msgList = new ArrayList<>();
-    private EditText inputText;
-    private View send;
-    private RecyclerView msgRecyclerView;
     private MsgAdapter adapter;
+    private User receiver;
+    private FirebaseFirestore database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-                initMsgs();
+        setListeners();
+        loadReceiverDetails();
 
-        Intent intent = getIntent();
-        String name = intent.getStringExtra(Constants.KEY_NAME);
-        binding.topBarName.setText(name);
-        inputText = findViewById(R.id.input_text);
-        send = findViewById(R.id.send);
-        msgRecyclerView = findViewById(R.id.msg_recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(ChatActivity.this);
-        msgRecyclerView.setLayoutManager(layoutManager);
-        adapter = new MsgAdapter(msgList);
-        msgRecyclerView.setAdapter(adapter);
-
-        binding.back.setOnClickListener(v->onBackPressed());
-        send.setOnClickListener(v -> {
-           String content = inputText.getText().toString();
-           if(!"".equals(content)){
-               Msg msg = new Msg(content,Msg.TYPE_SENT);
-               msgList.add(msg);
-               adapter.notifyItemInserted(msgList.size() - 1);
-               msgRecyclerView.scrollToPosition(msgList.size() - 1);
-               inputText.setText("");
-           }
-        });
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(ChatActivity.this);
+//        binding.msgRecyclerView.setLayoutManager(layoutManager);
+//
+//        binding.back.setOnClickListener(v->onBackPressed());
+//        binding.send.setOnClickListener(v -> {
+//           String content = binding.inputText.getText().toString();
+//           if(!"".equals(content)){
+//               Msg msg = new Msg(content,Msg.TYPE_SENT);
+//               msgList.add(msg);
+//               adapter.notifyItemInserted(msgList.size() - 1);
+//               binding.msgRecyclerView.scrollToPosition(msgList.size() - 1);
+//               binding.inputText.setText("");
+//           }
+//        });
     }
 
-    private void initMsgs(){
-        Msg msg1 = new Msg("Hello.",Msg.TYPE_RECEIVED);
-        msgList.add(msg1);
-        Msg msg2 = new Msg("Hello Who is this.",Msg.TYPE_SENT);
-        msgList.add(msg2);
-        Msg msg3 = new Msg("This is Tom. Nice talking to you.",Msg.TYPE_RECEIVED);
-        msgList.add(msg3);
+    private Bitmap getBitmapFromEncodedString(String encodedImage){
+        byte[] bytes = Base64.decode(encodedImage,Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+    }
+
+    public void sendMessage(){
+        HashMap<String,Object> message = new HashMap<>();
+//        message.put(Constants.KEY_SENDER_ID,);
+    }
+    private void init(){
+        pref = new PreferenceManager(getApplicationContext());
+        adapter = new MsgAdapter(msgList);
+        binding.msgRecyclerView.setAdapter(adapter);
+        database = FirebaseFirestore.getInstance();
+    }
+    private void loadReceiverDetails(){
+        receiver = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
+        binding.topBarName.setText(receiver.name);
+    }
+
+    private void setListeners(){
+        binding.back.setOnClickListener(v->onBackPressed());
     }
 }
