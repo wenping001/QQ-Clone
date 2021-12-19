@@ -92,6 +92,7 @@ public class LoginActivity extends BaseActivity{
                     pref.putString(Constants.KEY_USER_ID,ds.getId());
                     pref.putString(Constants.KEY_NAME,ds.getString(Constants.KEY_NAME));
                     pref.putString(Constants.KEY_IMAGE,ds.getString(Constants.KEY_IMAGE));
+                    pref.putString(Constants.KEY_EMAIL,ds.getString(Constants.KEY_EMAIL));
                     Intent intent = new Intent(this,MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

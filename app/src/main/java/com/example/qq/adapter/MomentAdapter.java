@@ -1,25 +1,28 @@
 package com.example.qq.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.qq.activities.DisplayImageActivity;
+import com.example.qq.activities.HomePageActivity;
 import com.example.qq.databinding.MomentsItemBinding;
 import com.example.qq.model.Moment;
+import com.example.qq.utilities.Constants;
 
 import java.util.List;
 
 public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.ViewHolder>{
 
     private List<Moment> moments;
-    private Context context;
+    public static Context context;
 
     public MomentAdapter(Context context, List<Moment> moments) {
         this.context = context;

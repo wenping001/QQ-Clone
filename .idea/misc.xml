@@ -20,29 +20,35 @@
         <entry key="..\:/android/QQ/app/src/main/res/drawable/rounded_image.xml" value="0.253125" />
         <entry key="..\:/android/QQ/app/src/main/res/drawable/rounded_text_view_background.xml" value="0.253125" />
         <entry key="..\:/android/QQ/app/src/main/res/drawable/splash_background.xml" value="0.253125" />
+        <entry key="..\:/android/QQ/app/src/main/res/drawable/user_item_container.xml" value="0.209375" />
         <entry key="..\:/android/QQ/app/src/main/res/drawable/view_point.xml" value="0.12760416666666666" />
         <entry key="..\:/android/QQ/app/src/main/res/layout-v28/activity_login.xml" value="0.23697916666666666" />
         <entry key="..\:/android/QQ/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.15227576974564927" />
         <entry key="..\:/android/QQ/app/src/main/res/layout-w936dp/activity_login.xml" value="0.177734375" />
-        <entry key="..\:/android/QQ/app/src/main/res/layout/activity_add_moment.xml" value="0.21064814814814814" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/activity_add_moment.xml" value="0.264" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_chat.xml" value="0.176" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/activity_dispaly_image.xml" value="0.23697916666666666" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_firebase_test.xml" value="0.21064814814814814" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/activity_home_page.xml" value="0.2" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_register.xml" value="0.4" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_send_broadcast.xml" value="0.23333333333333334" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/activity_splash.xml" value="0.23697916666666666" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/contact_item.xml" value="0.4" />
-        <entry key="..\:/android/QQ/app/src/main/res/layout/fragment_contacts.xml" value="0.1" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/fragment_contacts.xml" value="0.264" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/fragment_fav.xml" value="0.2" />
-        <entry key="..\:/android/QQ/app/src/main/res/layout/fragment_message.xml" value="0.264" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/fragment_message.xml" value="0.2" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/fragment_profile.xml" value="0.21064814814814814" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/fragment_second.xml" value="0.11614583333333334" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/fragment_view.xml" value="0.16802536231884058" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/item_container_received_message.xml" value="0.264" />
-        <entry key="..\:/android/QQ/app/src/main/res/layout/item_container_send_message.xml" value="0.264" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/item_container_send_message.xml" value="0.8" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/item_recent_conversion.xml" value="0.2" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/item_recent_message.xml" value="0.19322916666666667" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/moments_item.xml" value="0.2" />
         <entry key="..\:/android/QQ/app/src/main/res/layout/msg_item.xml" value="0.2" />
-        <entry key="..\:/android/QQ/app/src/main/res/layout/user_item.xml" value="0.4" />
+        <entry key="..\:/android/QQ/app/src/main/res/layout/user_item.xml" value="0.264" />
         <entry key="..\:/android/QQ/app/src/main/res/menu/bottom_navigation.xml" value="0.264" />
       </map>
     </option>

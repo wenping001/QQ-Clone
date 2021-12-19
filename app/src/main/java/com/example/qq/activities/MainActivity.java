@@ -2,7 +2,9 @@ package com.example.qq.activities;
 
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.qq.fragments.ContactsFragment;
@@ -73,5 +75,9 @@ public class MainActivity extends BaseActivity{
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    public void toHomePage(View view) {
+
     }
 }

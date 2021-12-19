@@ -1,9 +1,11 @@
 package com.example.qq.fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -14,21 +16,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.qq.R;
+
+import com.example.qq.UserListener;
+import com.example.qq.activities.ChatActivity;
 import com.example.qq.adapter.UserAdapter;
 import com.example.qq.databinding.FragmentContactsBinding;
 import com.example.qq.model.User;
 import com.example.qq.utilities.Constants;
 import com.example.qq.utilities.PreferenceManager;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class ContactsFragment extends Fragment {
+public class ContactsFragment extends Fragment implements UserListener{
 
-    private static final String TAG = "CONTACTS";
     private FragmentContactsBinding binding;
     private PreferenceManager pref;
 
@@ -39,11 +44,11 @@ public class ContactsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentContactsBinding.inflate(inflater,container,false);
         View view = binding.getRoot();
-        pref = new PreferenceManager(getActivity().getApplicationContext());
+        pref = new PreferenceManager(requireActivity());
         binding.contactsRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         loadUserDetail();
         getUsers();
@@ -77,8 +82,8 @@ public class ContactsFragment extends Fragment {
                     userList.add(user);
                 }
                 if(userList.size() > 0){
-                    Log.d(TAG, "getUsers: "+ userList.toString());
-                    UserAdapter userAdapter = new UserAdapter(getActivity(),userList);
+                    UserAdapter userAdapter = new UserAdapter(getActivity(), userList, this);
+                    binding.contactsRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
                     binding.contactsRecyclerview.setAdapter(userAdapter);
                 }
                 else{
@@ -97,4 +102,10 @@ public class ContactsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onUserClicked(User user) {
+        Intent intent = new Intent(getActivity(),ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER,user);
+        startActivity(intent);
+    }
 }

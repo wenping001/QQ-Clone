@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-    private TextWatcher registerTextWatcher = new TextWatcher() {
+    private final TextWatcher registerTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }

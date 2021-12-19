@@ -6,11 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.qq.UserListener;
 import com.example.qq.activities.ChatActivity;
 import com.example.qq.databinding.UserItemBinding;
 import com.example.qq.model.User;
@@ -22,10 +24,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
     private List<User> userList;
     private Context context;
+    private UserListener userListener;
 
-    public UserAdapter(Context context, List<User> userList) {
+    public UserAdapter(Context context, List<User> userList,UserListener userListener) {
         this.context = context;
         this.userList = userList;
+        this.userListener = userListener;
     }
 
     @NonNull
@@ -33,19 +37,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         UserItemBinding userItemBinding = UserItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()),parent,false);
-        return new MyViewHolder(userItemBinding);
+        return new MyViewHolder(userItemBinding,userListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         User user= userList.get(position);
         holder.setUserData(user);
-        holder.binding.userItem.setOnClickListener(v->{
-            Intent intent =new Intent(context, ChatActivity.class);
-            intent.putExtra(Constants.KEY_USER,user);
-            context.startActivity(intent);
-        });
-
     }
 
     public Bitmap getUserImage(String encodedImage){
@@ -58,19 +56,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         return userList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         UserItemBinding binding;
+        UserListener userListener;
 
-        MyViewHolder(UserItemBinding contactItemBinding) {
+        MyViewHolder(UserItemBinding contactItemBinding,UserListener onUserListener) {
             super(contactItemBinding.getRoot());
+            this.userListener = onUserListener;
             binding = contactItemBinding;
         }
 
         void setUserData(User user){
-            binding.username.setText(user.name);
+            binding.conversationName.setText(user.name);
             binding.userEmail.setText(user.email);
-            binding.userImage.setImageBitmap(getUserImage(user.image));
+            binding.recentConversationImage.setImageBitmap(getUserImage(user.image));
+            binding.recentConversation.setOnClickListener(v -> UserAdapter.this.userListener.onUserClicked(user));
         }
     }
 }

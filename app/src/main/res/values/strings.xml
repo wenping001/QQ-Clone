@@ -21,16 +21,15 @@
     <string name="register">register</string>
     <string name="log_in">Log in</string>
     <string name="create_new_account">Create New Account</string>
+    <string name="title_activity_home_page">HomePageActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
-    <string-array name="contacts_name">
-        <item>Elon Mask</item>
-        <item>Jack Ma</item>
-        <item>Mark Elliot Zuckerberg</item>
-        <item>Bill Gates</item>
-        <item>Jeff Bezos</item>
-        <item>Steven Jobs</item>
-        <item>Warren Buffet</item>
-    </string-array>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 
 </resources>

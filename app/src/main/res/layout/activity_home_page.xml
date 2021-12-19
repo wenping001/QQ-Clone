@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".activities.HomePageActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/poster"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_180sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/poster"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/back"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/back_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            app:layout_constraintStart_toStartOf="@+id/back"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            android:src="@drawable/avatar_david"
+            android:scaleType="centerCrop"
+            app:riv_oval="true"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="@dimen/_1sdp"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="117dp" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="@dimen/_20sdp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="David"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="@+id/avatar" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/white"
+            android:text="152230611@qq.com"
+            app:layout_constraintBottom_toBottomOf="@+id/avatar"
+            app:layout_constraintStart_toStartOf="@+id/name">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/moment_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/diary_number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/poster" />
+
+        <TextView
+            android:id="@+id/photo_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/message_number"
+            app:layout_constraintStart_toEndOf="@+id/diary_number"
+            app:layout_constraintTop_toTopOf="@+id/diary_number" />
+
+        <TextView
+            android:id="@+id/message_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_number"
+            app:layout_constraintStart_toEndOf="@+id/photo_number"
+            app:layout_constraintTop_toTopOf="@+id/photo_number" />
+
+        <TextView
+            android:id="@+id/visitor_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/message_number"
+            app:layout_constraintTop_toTopOf="@+id/message_number" />
+
+        <TextView
+            android:id="@+id/diary_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textColor="#FDFDFD"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/photo_number"
+            app:layout_constraintStart_toEndOf="@+id/moment_number"
+            app:layout_constraintTop_toTopOf="@+id/moment_number" />
+
+        <TextView
+            android:id="@+id/moment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="说说"
+            app:layout_constraintEnd_toEndOf="@+id/moment_number"
+            app:layout_constraintStart_toStartOf="@+id/moment_number"
+            app:layout_constraintTop_toBottomOf="@+id/moment_number" />
+
+        <TextView
+            android:id="@+id/diary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="日志"
+            app:layout_constraintEnd_toEndOf="@+id/diary_number"
+            app:layout_constraintStart_toStartOf="@+id/diary_number"
+            app:layout_constraintTop_toBottomOf="@+id/diary_number" />
+
+        <TextView
+            android:id="@+id/photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="相册"
+            app:layout_constraintEnd_toEndOf="@+id/photo_number"
+            app:layout_constraintStart_toStartOf="@+id/photo_number"
+            app:layout_constraintTop_toBottomOf="@+id/photo_number" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="留言"
+            app:layout_constraintEnd_toEndOf="@+id/message_number"
+            app:layout_constraintStart_toStartOf="@+id/message_number"
+            app:layout_constraintTop_toBottomOf="@+id/message_number" />
+
+        <TextView
+            android:id="@+id/visitor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="访客"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_number"
+            app:layout_constraintStart_toStartOf="@+id/visitor_number"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_number" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_moments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/moment" />
+
+        <ProgressBar
+            android:id="@+id/progressBarInHomePage"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/my_moments" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>
